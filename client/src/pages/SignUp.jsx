@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom'
 
 export default function SignUp() {
   const [formdata, setformdata] = useState({});
+  const [error, seterror] = useState(false);
   const handlechange = (e) => {
     setformdata({...formdata, [e.target.id]: e.target.value
     });
@@ -10,9 +11,27 @@ export default function SignUp() {
 
   const handlesubmit = async(e) =>{
     e.preventDefault();
-    const res = await fetch('http://localhost:3000/backend/auth/signup', formdata);
-    const data = await res.json();
-    console.log(data);
+    try{
+      seterror(false);
+      const res = await fetch('/backend/auth/signup', {
+        method: 'POST' ,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formdata),
+      });
+      const data = await res.json();
+      console.log(data);
+      if(data.success === false){
+        seterror(true);
+        return;
+      }
+      
+      
+    } catch (error){
+      seterror(true);
+
+    }
     
   };
 
@@ -51,6 +70,7 @@ export default function SignUp() {
         <span className='text-blue-500'>Login</span>
         </Link>
       </div>
+      <p className='text-red-700 mt-5'>{error && "Something went wrong!"}</p>
       </div>
   )
 }
