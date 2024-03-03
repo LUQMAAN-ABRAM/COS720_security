@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import {Link, useNavigate} from 'react-router-dom'
+import { signinstart, signinsuccess, signinfailure } from '../redux/user/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function Login() {
   const [formdata, setformdata] = useState({});
-  const [error, seterror] = useState(false);
+  const {error} = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handlechange = (e) => {
     setformdata({...formdata, [e.target.id]: e.target.value
     });
@@ -13,7 +16,7 @@ export default function Login() {
   const handlesubmit = async(e) =>{
     e.preventDefault();
     try{
-      seterror(false);
+      dispatch(signinstart());
       const res = await fetch('/backend/auth/login', {
         method: 'POST' ,
         headers: {
@@ -22,15 +25,16 @@ export default function Login() {
         body: JSON.stringify(formdata),
       });
       const data = await res.json();
+      dispatch(signinsuccess(data));
       console.log(data);
       if(data.success === false){
-        seterror(true);
+        dispatch(signinfailure());
         return;
       }
     navigate('/');
       
     } catch (error){
-      seterror(true);
+      dispatch(signinfailure(error));
 
     }
     
