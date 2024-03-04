@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 import { signinstart, signinsuccess, signinfailure } from '../redux/user/UserSlice.js';
 import { useDispatch, useSelector } from 'react-redux';
+import OAuth from '../components/OAuth.jsx';
 
 export default function Login() {
   const [formdata, setformdata] = useState({});
@@ -63,6 +64,7 @@ export default function Login() {
         onChange={handlechange}/>
 
         <button className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-90 disabled:opacity-80'>Submit</button>
+        <OAuth/>
       </form>
       <div>
         <p>Dont have an account?</p>

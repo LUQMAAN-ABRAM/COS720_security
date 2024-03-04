@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import {Link} from 'react-router-dom'
+import OAuth from '../components/OAuth';
 
 export default function SignUp() {
   const [formdata, setformdata] = useState({});
@@ -63,6 +64,7 @@ export default function SignUp() {
         onChange={handlechange}/>
 
         <button className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-90 disabled:opacity-80'>Submit</button>
+        <OAuth/>
       </form>
       <div>
         <p>Have an account?</p>
