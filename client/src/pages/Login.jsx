@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import {Link, useNavigate} from 'react-router-dom'
-import { signinstart, signinsuccess, signinfailure } from '../redux/user/userSlice';
+import { signinstart, signinsuccess, signinfailure } from '../redux/user/UserSlice.js';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function Login() {
@@ -25,12 +25,12 @@ export default function Login() {
         body: JSON.stringify(formdata),
       });
       const data = await res.json();
-      dispatch(signinsuccess(data));
       console.log(data);
       if(data.success === false){
-        dispatch(signinfailure());
+        dispatch(signinfailure(data.message));
         return;
       }
+    dispatch(signinsuccess(data));
     navigate('/');
       
     } catch (error){
@@ -70,7 +70,7 @@ export default function Login() {
         <span className='text-blue-500'>SignUp</span>
         </Link>
       </div>
-      <p className='text-red-700 mt-5'>{error && "Something went wrong!"}</p>
+      <p className='text-red-700 mt-5'>{error?  "User not found!" : ""}</p>
       </div>
-  )
+  );
 }
