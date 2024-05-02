@@ -32,7 +32,7 @@ export default function Login() {
         return;
       }
     dispatch(signinsuccess(data));
-    navigate('/');
+    navigate('/Home');
       
     } catch (error){
       dispatch(signinfailure(error));

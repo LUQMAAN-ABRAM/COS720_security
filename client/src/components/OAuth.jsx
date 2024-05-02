@@ -3,6 +3,7 @@ import { app } from '../firebase';
 import {useDispatch} from 'react-redux';
 import { signinsuccess } from '../redux/user/UserSlice.js';//might have to remove
 
+
 export default function OAuth() {
     const dispatch = useDispatch();
     const handleGoogleClick = async () => {
@@ -26,6 +27,7 @@ export default function OAuth() {
             const data = await res.json();
             console.log(data);
             dispatch(signinsuccess(data));
+            
 
         } catch (error) {
             console.log("Could not log in with google", error);
