@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import {Link} from 'react-router-dom'
 import OAuth from '../components/OAuth';
+import {deleteUserStart, deleteUserSuccess, deleteUserFailure, signOut} from '../redux/user/UserSlice' ;
+import { useDispatch } from 'react-redux';
 
 export default function SignUp() {
+  const dispatch = useDispatch();
   const [formdata, setformdata] = useState({});
   const [error, seterror] = useState(false);
   const handlechange = (e) => {
@@ -34,6 +37,36 @@ export default function SignUp() {
 
     }
     
+  };
+
+ /* const handledeleteaccount = async () => {
+    try {
+      dispatch(deleteUserStart());
+      console.log('in function');
+      const res = await fetch(`/backend/user/delete/${currentuser._id}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+      console.log(data);
+      if (data.success === false) {
+        dispatch(deleteUserFailure(data));
+        return;
+      }
+      dispatch(deleteUserSuccess(data));
+      
+    } catch (error) {
+      dispatch(deleteUserFailure(error));
+    }
+  };
+*/
+  const handlesignout = async () => {
+    try {
+      await fetch('/backend/auth/signout');
+      dispatch(signOut())
+    } catch (error) {
+      console.log(error);
+    }
+
   };
 
 
@@ -71,6 +104,12 @@ export default function SignUp() {
         <Link to='/Login'>
         <span className='text-blue-500'>Login</span>
         </Link>
+      </div>
+      <div className='flex justify-between mt-5'>
+        
+        <span onClick={handlesignout} className='text-red-700 cursor-pointer'>
+          Sign out
+        </span>
       </div>
       <p className='text-red-700 mt-5'>{error && "Something went wrong!"}</p>
       </div>
