@@ -6,6 +6,7 @@ import About from './pages/About';
 import Profile from './pages/Profile';
 import Header from './components/Header';
 import PrivateRoute from './components/PrivateRoute';
+import Modules from './pages/Modules';
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
       <Route path="/Login" element={<Login />}/>
       <Route path="/About" element={<About />}/>
       <Route path="/Home" element={<Home />}/>
+      <Route path="/Modules" element={<Modules />}/>
       <Route element={<PrivateRoute />}>
       <Route path="/Profile" element={<Profile />}/>
       </Route>
