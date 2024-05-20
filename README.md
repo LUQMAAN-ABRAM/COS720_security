@@ -1,3 +1,3 @@
 # COS720_security
 
-##MERN stack authentication project
+## MERN stack authentication project
