@@ -1,5 +1,3 @@
-// Modules.js
-
 import React, { useState } from "react";
 import { useSelector } from 'react-redux';
 
@@ -11,12 +9,12 @@ const Module = ({ subject, onRegister, isRegistered }) => {
   };
 
   return (
-    <div className="bg-gray-200 p-4 m-2 rounded-lg">
-      <h2 className="text-lg font-bold">{subject}</h2>
+    <div className="bg-gray-800 p-4 m-2 rounded-lg">
+      <h2 className="text-lg font-bold text-white">{subject}</h2>
       {!isRegistered && (
         <button
           onClick={handleRegister}
-          className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="mt-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-600"
         >
           Register
         </button>
@@ -63,8 +61,8 @@ const Modules = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4">Modules</h1>
+    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-br from-gray-800 to-gray-900 text-white">
+      <h1 className="text-4xl font-bold mb-8 text-white">Modules</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {subjects.map((subject, index) => (
           <Module

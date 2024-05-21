@@ -54,15 +54,15 @@ export default function Login() {
   };
 
   return (
-    <div className="p-3 max-w-lg mx-auto">
-      <h1 className="text-3xl text-center font-semibold my-7">Login</h1>
+    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-br from-gray-800 to-gray-900 text-white">
+      <h1 className="text-4xl font-bold mb-8">Welcome back</h1>
 
-      <form className="flex flex-col gap-4" onSubmit={handlesubmit}>
+      <form className="flex flex-col gap-4 max-w-md w-full" onSubmit={handlesubmit}>
         <input
           type="email"
           placeholder="Email"
           id="email"
-          className="bg-slate-100 p-3 rounded-lg"
+          className="bg-gray-700 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
           onChange={handlechange}
         />
 
@@ -70,27 +70,25 @@ export default function Login() {
           type="password"
           placeholder="Password"
           id="password"
-          className="bg-slate-100 p-3 rounded-lg"
+          className="bg-gray-700 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
           onChange={handlechange}
         />
 
         <button
           id="submitBtn"
-          className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-90 disabled:opacity-80"
+          className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg uppercase font-semibold disabled:opacity-70 focus:outline-none focus:ring-2 focus:ring-blue-600"
         >
           Submit
         </button>
         <OAuth />
       </form>
-      <div>
-        <p>Don't have an account?</p>
-        <Link to="/SignUp">
-          <span className="text-blue-500">SignUp</span>
-        </Link>
+
+      <div className="mt-4 text-sm">
+        <p>Don't have an account? <Link to="/SignUp" className="text-blue-500">Sign Up</Link></p>
       </div>
-      <p className="text-red-700 mt-5">{error && failedAttempts === 3? 'You have entered the incorrect Login details three times. Please wait for 3 minutes before trying again.' : ''}</p>
-      <p className="text-red-700 mt-5">{error && failedAttempts !== 3? 'User not found!' : ''}</p>
-      
+
+      <p className="mt-4 text-red-500">{error && failedAttempts === 3 && errorMessage}</p>
+      <p className="text-red-500">{error && failedAttempts !== 3 && 'User not found!'}</p>
     </div>
   );
 }
