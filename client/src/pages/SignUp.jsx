@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import OAuth from '../components/OAuth';
-import {deleteUserStart, deleteUserSuccess, deleteUserFailure, signOut} from '../redux/user/UserSlice' ;
+import { signinstart, signinsuccess, signinfailure, signOut } from '../redux/user/UserSlice.js';
 import { useDispatch } from 'react-redux';
 
 export default function SignUp() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [formdata, setformdata] = useState({});
   const [error, seterror] = useState(false);
   const handlechange = (e) => {
@@ -17,6 +18,7 @@ export default function SignUp() {
     e.preventDefault();
     try{
       seterror(false);
+      dispatch(signinstart());
       const res = await fetch('/backend/auth/signup', {
         method: 'POST' ,
         headers: {
@@ -26,6 +28,8 @@ export default function SignUp() {
       });
       const data = await res.json();
       console.log(data);
+      dispatch(signinsuccess(data));
+      navigate('/Home');
       if(data.success === false){
         seterror(true);
         return;
