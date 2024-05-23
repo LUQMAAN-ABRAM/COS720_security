@@ -20,12 +20,12 @@ export const signup = async (req, res, next) => {
  };
 
  export const login = async (req, res, next) => {
-  const {email, password} = req.body;
+  const query =  {email : req.body.email.toString() , password : req.body.password};
  
   try {
-    const validuser = await User.findOne({ email: { $eq: email } });
+    const validuser = await User.findOne({email: query.email});
     if (!validuser) return next(errorhandler(404, 'User not found'));
-    const validpassword = bcryptjs.compareSync(password, validuser.password);
+    const validpassword = bcryptjs.compareSync(query.password, validuser.password);
     if (!validpassword) return next(errorhandler(401, 'Incorrect credentials'));
     if (validuser && validpassword){
       console.log("valid credentials");
