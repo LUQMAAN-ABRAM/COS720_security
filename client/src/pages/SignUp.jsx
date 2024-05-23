@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import OAuth from '../components/OAuth';
 import { signinstart, signinsuccess, signinfailure, signOut } from '../redux/user/UserSlice.js';
 import { useDispatch } from 'react-redux';
+import log from 'loglevel';
 
 export default function SignUp() {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ export default function SignUp() {
   const handlesubmit = async (e) => {
     e.preventDefault();
     try {
+      log.info('User signup attempt'); // Log login attempt
       seterror(false);
       dispatch(signinstart());
       const res = await fetch('/backend/auth/signup', {

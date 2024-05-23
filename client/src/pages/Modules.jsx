@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from 'react-redux';
+import log from 'loglevel';
 
 const Module = ({ subject, onRegister, isRegistered }) => {
   const currentUserEmail = useSelector(state => state.user);
@@ -42,6 +43,7 @@ const Modules = () => {
     console.log(subject);
     var email = currentUserEmail.currentuser.email;
     try {
+      log.info('User chose a subject');
       const res = await fetch('/backend/module/modulereg', {
         method: 'POST',
         headers: {

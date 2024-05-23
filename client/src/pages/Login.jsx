@@ -3,6 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { signinstart, signinsuccess, signinfailure } from '../redux/user/UserSlice.js';
 import { useDispatch, useSelector } from 'react-redux';
 import OAuth from '../components/OAuth.jsx';
+import log from 'loglevel';
+
+log.setLevel('info'); // Set default log level
 
 export default function Login() {
   const [formdata, setformdata] = useState({});
@@ -19,6 +22,7 @@ export default function Login() {
   const handlesubmit = async (e) => {
     e.preventDefault();
     try {
+      log.info('User login attempt:', formdata.email); // Log login attempt
       dispatch(signinstart());
       const res = await fetch('/backend/auth/login', {
         method: 'POST',
@@ -28,8 +32,8 @@ export default function Login() {
         body: JSON.stringify(formdata),
       });
       const data = await res.json();
-      console.log(data);
       if (data.success === false) {
+        log.warn('Login failed:', data.message); // Log login failure
         dispatch(signinfailure(data.message));
         // Increment failed attempts
         setFailedAttempts(failedAttempts + 1);
@@ -37,19 +41,23 @@ export default function Login() {
         if (failedAttempts === 2) {
           setErrorMessage('You have reached the maximum number of failed attempts. Please wait for 3 minutes before trying again.');
           document.getElementById('submitBtn').setAttribute('disabled', 'disabled');
+          log.error('User disabled due to too many failed attempts:', formdata.email); // Log disabling user
           setTimeout(() => {
             // Reset failed attempts and error message after 3 minutes
             setFailedAttempts(0);
             setErrorMessage('');
             document.getElementById('submitBtn').removeAttribute('disabled');
+            log.info('User can try logging in again:', formdata.email); // Log re-enabling user
           }, 180000); // 3 minutes in milliseconds
         }
         return;
       }
+      
       dispatch(signinsuccess(data));
       navigate('/Home');
     } catch (error) {
-      dispatch(signinfailure(error));
+      log.error('Login error:', error); // Log any error during login process
+      dispatch(signinfailure(error.message || 'An unexpected error occurred'));
     }
   };
 
