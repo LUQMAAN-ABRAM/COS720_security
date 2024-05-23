@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { signinstart, signinsuccess, signinfailure } from '../redux/user/UserSlice.js';
+import { signinstart, signinsuccess, signinfailure } from '../redux/user/userSlice.js';
 import { useDispatch, useSelector } from 'react-redux';
 import OAuth from '../components/OAuth.jsx';
 import log from 'loglevel';

@@ -1,7 +1,7 @@
 import {GoogleAuthProvider, signInWithPopup, getAuth} from 'firebase/auth';
 import { app } from '../firebase';
 import {useDispatch} from 'react-redux';
-import { signinsuccess } from '../redux/user/UserSlice.js';//might have to remove
+import { signinsuccess } from '../redux/user/userSlice.js';//might have to remove
 import {useNavigate} from 'react-router-dom';
 
 
